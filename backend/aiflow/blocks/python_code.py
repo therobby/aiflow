@@ -3,14 +3,17 @@ from backend.aiflow.models import PythonCodeConfig
 
 import subprocess
 
-
 def python_code(flow, block, flow_results, previous_output):
     config = PythonCodeConfig.objects.get(block=block)
     try:
-        # Ostrzeżenie: Używanie subprocess.run z inputem od użytkownika może być ryzykowne.
-        # W produkcji rozważ bezpieczniejsze metody wykonywania kodu.
-        process = subprocess.run(['python', '-c', config.code], input=previous_output,
-                                 capture_output=True, text=True, check=True)
+        process = subprocess.run([
+                'python', '-c', config.code
+            ],
+            input=previous_output,
+            capture_output=True,
+            text=True,
+            check=True
+        )
         output = process.stdout
         flow_results[flow.id][block.id]['output'] = output
         previous_output = output
