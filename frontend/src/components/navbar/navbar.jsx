@@ -7,10 +7,11 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { ModeToggle } from "../theme/mode-toggle";
 
 export default function Navbar() {
-  const { asPath } = useRouter();
+  const asPath = usePathname();
 
   const isActive = (path) => asPath === path;
 
@@ -25,7 +26,7 @@ export default function Navbar() {
             <div className="flex space-x-4">
               <Link
                 href="/flows"
-                className={`text-lg hover:underline ${
+                className={`text-lg hover:underline self-center ${
                   isActive("/flows") ? "font-bold text-blue-500" : ""
                 }`}
               >
@@ -33,12 +34,13 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/blocks"
-                className={`text-lg hover:underline ${
+                className={`text-lg hover:underline self-center ${
                   isActive("/blocks") ? "font-bold text-blue-500" : ""
                 }`}
               >
                 Blocks
               </Link>
+              <ModeToggle />
             </div>
           </NavigationMenuItem>
         </NavigationMenuList>
